@@ -1,6 +1,10 @@
 plugins {
 	id 'com.android.application'
 	id 'org.jetbrains.kotlin.android'
+	id 'kotlin-kapt'
+	id 'com.google.dagger.hilt.android'
+	id 'androidx.navigation.safeargs.kotlin'
+	id 'kotlin-parcelize'
 }
 
 android {
@@ -23,21 +27,50 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 		}
 	}
-	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
+	buildFeatures {
+		viewBinding true
 	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
+	}
+
 	kotlinOptions {
-		jvmTarget = '1.8'
+		jvmTarget = '17'
 	}
 }
 
 dependencies {
 
-	implementation 'androidx.core:core-ktx:1.8.0'
-	implementation 'androidx.appcompat:appcompat:1.6.1'
-	implementation 'com.google.android.material:material:1.9.0'
-	testImplementation 'junit:junit:4.13.2'
+	def version_constraint_layout = "2.1.4"
+	def version_material_design = "1.9.0"
+	def version_app_comp = "1.6.1"
+	def version_core_ktx = "1.10.1"
+	def version_hilt = "2.44"
+	def version_navigation_comp = "2.5.3"
+	def version_junit = "4.13.2"
+	def version_mockk = "1.13.2"
+	def version_arch_core = "2.1.0"
+	def version_coroutine_test = "1.6.0"
+
+	implementation "androidx.core:core-ktx:$version_core_ktx"
+	implementation "androidx.appcompat:appcompat:$version_app_comp"
+	implementation "com.google.android.material:material:$version_material_design"
+	implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
+
+	implementation "com.google.dagger:hilt-android:$version_hilt"
+	kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
+
+	implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation_comp"
+	implementation "androidx.navigation:navigation-ui-ktx:$version_navigation_comp"
+
+	testImplementation "junit:junit:$version_junit"
+	testImplementation "io.mockk:mockk:$version_mockk"
+	testImplementation "androidx.arch.core:core-testing:$version_arch_core"
+	testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutine_test"
+
+	testImplementation "junit:junit:$version_junit"
 	androidTestImplementation 'androidx.test.ext:junit:1.1.5'
 	androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
