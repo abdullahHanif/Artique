@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.Artique" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -22,4 +22,12 @@
     <style name="Theme.Artique.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Artique.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
 </resources>

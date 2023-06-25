@@ -25,6 +25,7 @@ android {
 		release {
 			minifyEnabled false
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+			signingConfig signingConfigs.debug
 		}
 	}
 	buildFeatures {
@@ -43,6 +44,7 @@ android {
 
 dependencies {
 
+	implementation 'androidx.databinding:databinding-runtime:8.0.2'
 	def version_constraint_layout = "2.1.4"
 	def version_material_design = "1.9.0"
 	def version_app_comp = "1.6.1"
@@ -53,12 +55,14 @@ dependencies {
 	def version_mockk = "1.13.2"
 	def version_arch_core = "2.1.0"
 	def version_coroutine_test = "1.6.0"
+	def version_glide = "4.15.1"
 
 	implementation "androidx.core:core-ktx:$version_core_ktx"
 	implementation "androidx.appcompat:appcompat:$version_app_comp"
 	implementation "com.google.android.material:material:$version_material_design"
 	implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
 
+	implementation "com.github.bumptech.glide:glide:$version_glide"
 	implementation "com.google.dagger:hilt-android:$version_hilt"
 	kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
 
