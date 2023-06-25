@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.artique.HomeActivity
 import com.artique.R
 import com.artique.common.launchAndRepeatWithViewLifecycle
 import com.artique.databinding.FragmentFoldersBinding
@@ -53,6 +54,7 @@ class FoldersFragment : Fragment(R.layout.fragment_folders) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as HomeActivity).updateToolbarTitle(getString(R.string.title_activity_home))
 
         launchAndRepeatWithViewLifecycle {
             viewModel.folders.collectLatest { state ->

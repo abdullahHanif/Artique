@@ -12,7 +12,7 @@ import javax.inject.Inject
 class FetchFoldersUseCase @Inject constructor(
     private val galleryRepository: DefaultGalleryRepository,
 ) {
-    private val albums: MutableList<AlbumContent> = arrayListOf()
+    private val albumContents: MutableList<AlbumContent> = arrayListOf()
 
     suspend fun fetch(): List<AlbumContent> = withContext(Dispatchers.Default) {
         val mediaContent = galleryRepository.fetchExternalStorageMediaContents()
@@ -24,7 +24,7 @@ class FetchFoldersUseCase @Inject constructor(
         } ?.let {
             val totalPictures = mediaContent.filter { it.contentType.contains(PICTURE)}.size
 
-            albums.add(
+            albumContents.add(
                 AlbumContent(
                     displayPicture = it.path,
                     displayName = "All Images",
@@ -40,7 +40,7 @@ class FetchFoldersUseCase @Inject constructor(
         }?.let {
             val totalMovies = mediaContent.filter { it.contentType.contains(MOVIE)}.size
 
-            albums.add(
+            albumContents.add(
                 AlbumContent(
                     displayPicture = it.path,
                     displayName = "All Videos",
@@ -69,10 +69,10 @@ class FetchFoldersUseCase @Inject constructor(
                 count = totalMedia.toString()
             )
         }.also {
-            albums.addAll(it)
+            albumContents.addAll(it)
         }
 
-        albums
+        albumContents
     }
 
 

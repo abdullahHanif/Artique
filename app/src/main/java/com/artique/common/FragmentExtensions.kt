@@ -1,9 +1,11 @@
 package com.artique.common
 
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.artique.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

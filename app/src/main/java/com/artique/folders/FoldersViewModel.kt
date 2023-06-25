@@ -35,10 +35,6 @@ class FoldersViewModel @Inject constructor(private val fetchFoldersUseCase :Fetc
     }
 }
 
-sealed class FoldersViewEvent  {
-    object NavigateToFolderDetails : FoldersViewEvent()
-}
-
 data class FoldersState(
     var listing: List<AlbumContent> = listOf(),
 )

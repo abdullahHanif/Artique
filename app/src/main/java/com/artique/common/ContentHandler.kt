@@ -27,44 +27,86 @@ class DefaultContentHandler @Inject constructor(val contentResolver: ContentReso
             MediaStore.MediaColumns.MIME_TYPE,
             MediaStore.MediaColumns.DATE_ADDED
         )
-        val query = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().build()
-        val sortOrder = "${MediaStore.Images.Media._ID} DESC"
+        val imageQuery = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().build()
+        val imageSortOrder = "${MediaStore.Images.Media._ID} DESC"
 
-        contentResolver.query(query, projection, null, null, sortOrder)?.use { cursor ->
+        val videoQuery = MediaStore.Video.Media.EXTERNAL_CONTENT_URI.buildUpon().build()
+        val videoSortOrder = "${MediaStore.Video.Media._ID} DESC"
+
+        contentResolver.query(imageQuery, projection, null, null, imageSortOrder)?.use{ cursor ->
             try {
-                with(cursor) {
-                    while (moveToNext()) {
-                        val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                while (cursor.moveToNext()) {
+                    val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
 
-                        val displayName =
-                            getString(getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
-                        val folderName =
-                            getString(getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
-                        val path =
-                            getString(getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
+                    val displayName =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
+                    val folderName =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
+                    val path =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
 
-                        val id = cursor.getLong(idColumn)
+                    val id = cursor.getLong(idColumn)
 
-                        val contentUri = ContentUris.withAppendedId(
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                            id
+                    val contentUri = ContentUris.withAppendedId(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        id
+                    )
+                    val contentType =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.MIME_TYPE))
+                    val createdAt =
+                        cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_ADDED))
+
+                    val folderContentItem =
+                        FolderContent(
+                            path = path,
+                            displayName = displayName,
+                            folderName = folderName,
+                            uri = contentUri.toString(),
+                            contentType = contentType,
+                            createdAt = createdAt
                         )
-                        val contentType =
-                            getString(getColumnIndexOrThrow(MediaStore.MediaColumns.MIME_TYPE))
-                        val createdAt =
-                            getLong(getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_ADDED))
+                    folderContentList.add(folderContentItem)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                cursor.close()
+            }
+        }
 
-                        val folderContentItem =
-                            FolderContent(
-                                path = path,
-                                displayName = displayName,
-                                folderName = folderName,
-                                uri = contentUri.toString(),
-                                contentType = contentType,
-                                createdAt = createdAt
-                            )
-                        folderContentList.add(folderContentItem)
-                    }
+        contentResolver.query(videoQuery, projection, null, null, videoSortOrder)?.use { cursor ->
+            try {
+                while (cursor.moveToNext()) {
+                    val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
+
+                    val displayName =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME))
+                    val folderName =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.BUCKET_DISPLAY_NAME))
+                    val path =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA))
+
+                    val id = cursor.getLong(idColumn)
+
+                    val contentUri = ContentUris.withAppendedId(
+                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                        id
+                    )
+                    val contentType =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.MIME_TYPE))
+                    val createdAt =
+                        cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_ADDED))
+
+                    val folderContentItem =
+                        FolderContent(
+                            path = path,
+                            displayName = displayName,
+                            folderName = folderName,
+                            uri = contentUri.toString(),
+                            contentType = contentType,
+                            createdAt = createdAt
+                        )
+                    folderContentList.add(folderContentItem)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
