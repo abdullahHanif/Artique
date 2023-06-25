@@ -26,7 +26,6 @@ class HomeActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

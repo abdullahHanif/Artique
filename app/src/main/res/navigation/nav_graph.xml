@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/folderFragment">
+    app:startDestination="@+id/folderFragment">
 
     <fragment
         android:id="@+id/folderFragment"
         android:name="com.artique.folders.FoldersFragment"
         tools:layout="@layout/fragment_folders">
+
+        <action
+            android:id="@+id/action_folderFragment_to_folderDetailsFragment"
+            app:destination="@id/folderDetailsFragment" />
 
     </fragment>
 
@@ -17,6 +21,10 @@
         android:name="com.artique.folderdetail.FolderDetailsFragment"
         tools:layout="@layout/fragment_folders_details">
 
-    </fragment>
+        <argument
+            android:name="albumContent"
+            app:argType="com.artique.models.AlbumContent"
+            app:nullable="false" />
 
+    </fragment>
 </navigation>

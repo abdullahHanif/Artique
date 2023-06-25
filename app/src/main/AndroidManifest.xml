@@ -23,6 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Artique"
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
 
         <activity

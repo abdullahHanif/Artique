@@ -3,9 +3,11 @@ package com.artique.common
 import android.Manifest.permission
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build.VERSION_CODES
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.artique.common.PermissionHandler.PermissionResult
@@ -101,7 +103,9 @@ class DefaultPermissionHandler @Inject constructor(@ApplicationContext val conte
 
 enum class PermissionType(val permissionName: String) {
     ReadAllFiles(permission.READ_EXTERNAL_STORAGE),
+    @RequiresApi(VERSION_CODES.TIRAMISU)
     GalleryImages(permission.READ_MEDIA_IMAGES),
+    @RequiresApi(VERSION_CODES.TIRAMISU)
     GalleryVideos(permission.READ_MEDIA_VIDEO)
 }
 
