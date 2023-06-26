@@ -32,7 +32,7 @@ class FolderDetailsViewModel @Inject constructor(private val fetchFolderDetailsU
         loadFolders(filters)
     }
 
-    private fun loadFolders(folderDetailsFetchFilter: FolderDetailsFetchFilter) {
+     fun loadFolders(folderDetailsFetchFilter: FolderDetailsFetchFilter) {
         viewModelScope.launch() {
             with(fetchFolderDetailsUseCase.fetch(folderDetailsFetchFilter)) {
                 _folders.update { state ->
